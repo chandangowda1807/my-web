@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
@@ -11,7 +11,9 @@ link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600
 link.rel = 'stylesheet';
 document.head.appendChild(link);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const container = document.getElementById('root');
+const root = createRoot(container);
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>
