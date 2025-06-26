@@ -1,0 +1,280 @@
+/* 3D Floating Action Button Styles */
+.fab-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  perspective: 1500px;
+}
+
+.fab-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 999;
+}
+
+.fab-menu {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 1rem;
+  padding: 1rem;
+  transform-style: preserve-3d;
+  transform: 
+    rotateX(var(--tilt-x, 0deg)) 
+    rotateY(var(--tilt-y, 0deg)) 
+    translateZ(0);
+  transition: transform 0.1s ease-out;
+  z-index: 1001;
+}
+
+.fab-button {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.15),
+    0 6px 6px rgba(0, 0, 0, 0.1),
+    0 0 0 2px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 1002;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
+}
+
+.fab-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+  border-radius: 50%;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  transform: translateZ(-1px);
+}
+
+.fab-button:hover {
+  transform: translateY(-3px) scale(1.05) translateZ(10px);
+  box-shadow: 
+    0 15px 30px rgba(0, 0, 0, 0.2),
+    0 10px 10px rgba(0, 0, 0, 0.15),
+    0 0 20px var(--glow-color, rgba(59, 130, 246, 0.5));
+}
+
+.fab-button:active {
+  transform: translateY(0) scale(0.98) translateZ(0);
+  box-shadow: 
+    0 5px 10px rgba(0, 0, 0, 0.15),
+    0 3px 3px rgba(0, 0, 0, 0.1),
+    0 0 10px var(--glow-color, rgba(59, 130, 246, 0.5));
+}
+
+.fab-button.open {
+  transform: rotate(45deg) translateZ(10px);
+  background: linear-gradient(135deg, #ef4444, #f97316);
+}
+
+.fab-button.open::before {
+  background: linear-gradient(135deg, #f97316, #ef4444);
+}
+
+.fab-button.open:hover {
+  transform: rotate(45deg) translateY(-3px) scale(1.05) translateZ(10px);
+}
+
+.fab-button.open:active {
+  transform: rotate(45deg) translateY(0) scale(0.98) translateZ(0);
+}
+
+.fab-plus {
+  transition: transform 0.3s ease;
+}
+
+/* Fab Items */
+.fab-item {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: white;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  text-decoration: none;
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  transform: translateZ(0);
+  overflow: hidden;
+}
+
+.fab-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--item-color, #3b82f6);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.fab-item:hover {
+  transform: translateY(-3px) scale(1.1) translateZ(10px);
+  box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.15),
+    0 6px 6px rgba(0, 0, 0, 0.1),
+    0 0 15px var(--glow-color, rgba(59, 130, 246, 0.5));
+  color: white;
+}
+
+.fab-item:hover::before {
+  opacity: 1;
+}
+
+.fab-item:active {
+  transform: translateY(0) scale(0.98) translateZ(0);
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.08),
+    0 0 10px var(--glow-color, rgba(59, 130, 246, 0.5));
+}
+
+.fab-icon {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.fab-item:hover .fab-icon {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.fab-tooltip {
+  position: absolute;
+  right: 60px;
+  background: #1e293b;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.fab-item:hover .fab-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.fab-tooltip::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background: #1e293b;
+}
+
+/* 3D Cursor Effect */
+.cursor-effect {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow-color), transparent 70%);
+  pointer-events: none;
+  transform: 
+    translate(-50%, -50%) 
+    perspective(1000px) 
+    rotateX(var(--tilt-x, 0deg)) 
+    rotateY(var(--tilt-y, 0deg)) 
+    translateZ(0);
+  transition: 
+    transform 0.1s ease-out,
+    width 0.3s ease,
+    height 0.3s ease,
+    background 0.3s ease;
+  z-index: 9999;
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+
+/* Dark Mode */
+.dark .fab-item {
+  background: #1e293b;
+  color: #e2e8f0;
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.2),
+    0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.dark .fab-tooltip {
+  background: #334155;
+  color: #f8fafc;
+}
+
+.dark .fab-tooltip::after {
+  background: #334155;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .fab-container {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+  
+  .fab-button {
+    width: 56px;
+    height: 56px;
+    font-size: 1.4rem;
+  }
+  
+  .fab-item {
+    width: 46px;
+    height: 46px;
+    font-size: 1.1rem;
+  }
+  
+  .fab-tooltip {
+    display: none;
+  }
+  
+  .cursor-effect {
+    display: none;
+  }
+}

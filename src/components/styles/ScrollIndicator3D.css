@@ -1,0 +1,241 @@
+/* 3D Scroll Indicator Styles */
+.scroll-indicator-3d {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--background, #3b82f6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.9);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--box-shadow, 0 10px 25px -5px rgba(0, 0, 0, 0.1));
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  will-change: transform, box-shadow, background;
+}
+
+.scroll-indicator-3d.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(var(--scale, 1));
+}
+
+.scroll-indicator-3d.hovered {
+  box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.4) !important;
+}
+
+.scroll-indicator-3d:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.scroll-indicator-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  transform: translateZ(20px);
+  transition: transform 0.3s ease;
+}
+
+.scroll-arrow {
+  width: 24px;
+  height: 24px;
+  color: white;
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.scroll-indicator-3d:hover .scroll-arrow {
+  transform: translateZ(10px);
+}
+
+.scroll-progress {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.progress-fill {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform-origin: center;
+  transform: scaleY(0);
+  transition: transform 0.1s linear;
+}
+
+.scroll-pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  animation: pulse 2s infinite;
+  opacity: 0;
+  transform: scale(0.8);
+  z-index: -1;
+}
+
+.scroll-indicator-3d:hover .scroll-pulse {
+  animation: pulseHover 2s infinite;
+}
+
+.scroll-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, currentColor 0%, transparent 70%);
+  opacity: 0.3;
+  filter: blur(10px);
+  z-index: -1;
+  transition: all 0.3s ease;
+  transform: translateZ(-10px);
+}
+
+.scroll-indicator-3d:hover .scroll-glow {
+  opacity: 0.5;
+  transform: translateZ(-5px) scale(1.2);
+}
+
+/* 3D effect on hover */
+.scroll-indicator-3d::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  border-radius: inherit;
+  transform: translateZ(-5px);
+  filter: blur(5px);
+  opacity: 0.5;
+  transition: all 0.3s ease;
+  z-index: -2;
+}
+
+.scroll-indicator-3d::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  border-radius: inherit;
+  transform: translateZ(-10px);
+  filter: blur(10px);
+  opacity: 0.3;
+  transition: all 0.3s ease;
+  z-index: -3;
+}
+
+.scroll-indicator-3d:hover::before {
+  transform: translateZ(-8px);
+  opacity: 0.7;
+}
+
+.scroll-indicator-3d:hover::after {
+  transform: translateZ(-5px);
+  opacity: 0.5;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes pulseHover {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* Dark mode adjustments */
+.dark .scroll-indicator-3d {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.dark .scroll-indicator-3d:hover {
+  box-shadow: 0 20px 40px -10px rgba(96, 165, 250, 0.3);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-indicator-3d,
+  .scroll-indicator-inner,
+  .scroll-arrow,
+  .scroll-glow,
+  .scroll-pulse {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .progress-fill {
+    transition: none !important;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .scroll-indicator-3d {
+    right: 1rem;
+    bottom: 1rem;
+    width: 48px;
+    height: 48px;
+  }
+  
+  .scroll-arrow {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .scroll-pulse {
+    display: none;
+  }
+  
+  .scroll-glow {
+    filter: blur(5px);
+  }
+}

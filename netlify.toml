@@ -1,0 +1,17 @@
+[build]
+  publish = "build"
+  command = "npm run build"
+
+[dev]
+  command = "npm start"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[context.production.environment]
+  NODE_ENV = "production"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
